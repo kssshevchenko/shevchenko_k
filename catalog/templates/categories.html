@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Категорії</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f6f6f6;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            background: white;
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .child {
+            margin-left: 20px;
+            background: #eef3ff;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Категорії</h1>
+
+<ul>
+    {% for category in categories %}
+        {% if not category.parent %}
+            <li>
+                <strong>
+                    <a href="/categories/{{ category.slug }}/">
+                        {{ category.name }}
+                    </a>
+                </strong>
+
+                {% if category.children.all %}
+                    <ul>
+                        {% for child in category.children.all %}
+                            <li class="child">
+                                <a href="/categories/{{ child.slug }}/">
+                                    {{ child.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+</body>
+</html>
