@@ -3,74 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <title>Категорії</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
-            background-color: #f6f6f6;
+            background-color: #f2e6ff;
         }
 
         h1 {
             margin-bottom: 20px;
+            color: #4a3b6b;
         }
 
-        ul {
-            list-style: none;
-            padding-left: 0;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
         }
 
-        li {
-            background: white;
-            margin-bottom: 8px;
-            padding: 10px 15px;
-            border-radius: 8px;
+        .card {
+            background: #ffe6ff;
+            padding: 12px;
+            border-radius: 15px;
+            text-align: center;
+            transition: 0.2s;
+            box-sizing: border-box;
         }
 
-        .child {
-            margin-left: 20px;
-            background: #eef3ff;
+        .card:hover {
+            background: #e6ffe6;
+            transform: translateY(-3px);
         }
 
-        a {
+        .card img {
+            width: 100%;
+            max-width: 150px;
+            margin: 10px auto 0;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .card a {
             text-decoration: none;
-            color: black;
+            color: #6a4fa3;
+            font-weight: bold;
+            display: block;
+            margin-top: 6px;
         }
 
-        a:hover {
-            text-decoration: underline;
+        /* Адаптивність */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
 
 <h1>Категорії</h1>
 
-<ul>
+<div class="grid">
     {% for category in categories %}
-        {% if not category.parent %}
-            <li>
-                <strong>
-                    <a href="/categories/{{ category.slug }}/">
-                        {{ category.name }}
-                    </a>
-                </strong>
-
-                {% if category.children.all %}
-                    <ul>
-                        {% for child in category.children.all %}
-                            <li class="child">
-                                <a href="/categories/{{ child.slug }}/">
-                                    {{ child.name }}
-                                </a>
-                            </li>
-                        {% endfor %}
-                    </ul>
+        <div class="card">
+            <a href="/categories/{{ category.slug }}/">
+                {% if category.image %}
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}">
                 {% endif %}
-
-            </li>
-        {% endif %}
+                {{ category.name }}
+            </a>
+        </div>
     {% endfor %}
-</ul>
+</div>
 
 </body>
 </html>

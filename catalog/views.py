@@ -1,15 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 
-from django.http import HttpResponse
 from .models import Categories
-
-def index(request):
-    return HttpResponse("There are catalog")
+# from products.models import Product
 
 def catalog_list(request):
-    categories = Categories.objects.all()
+    categories = Categories.objects.filter(parent=None).order_by("order")
     return render(request, "categories.html", {'categories': categories})
 
-def catalog_details(request, slug):
-    category = get_object_or_404(Categories, slug=slug)
-    return render(request, "category_detail.html", {"category": category})
+def categories_details(request, slug):
+    categories = get_object_or_404(Categories, slug=slug)
+    children_list = categories.children.all().order_by("order")
+    return render(request, "categories_list.html", {"categories": categories,
+                                                    "subcategories": children_list})
