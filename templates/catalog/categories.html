@@ -74,15 +74,18 @@
 <div class="grid">
     {% for category in categories %}
         <div class="card">
-            <a href="/categories/{{ category.slug }}/">
+            <a href="{% url 'categories_details' category.slug %}">
                 {% if category.image %}
                     <img src="{{ category.image.url }}" alt="{{ category.name }}">
                 {% endif %}
-                {{ category.name }}
+                <div>{{ category.name }}</div>
             </a>
         </div>
     {% endfor %}
 </div>
 
+<a href="{% url 'products' %}" class="btn btn-primary">
+    Подивитися всі товари
+</a>
+
 </body>
-</html>
