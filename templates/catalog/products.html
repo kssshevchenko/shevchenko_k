@@ -77,11 +77,13 @@
     <div class="grid">
         {% for product in products %}
             <div class="product-card">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                {% endif %}
-                <a href="#">{{ product.name }}</a>
-                <p>Ціна: {{ product.price }} грн</p>
+                <a href="{% url 'product_list' product.slug %}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <div>{{ product.name }}</div>
+                    <p>Ціна: {{ product.price }} грн</p>
+                </a>
             </div>
         {% endfor %}
     </div>

@@ -27,11 +27,13 @@
     <div class="products-container">
         {% for product in products %}
             <div class="product-card">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                {% endif %}
-                <div class="product-name">{{ product.name }}</div>
-                <div class="product-price">{{ product.price }} грн</div>
+                <a href="{% url 'product_list' product.slug %}">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% endif %}
+                    <div class="product-name">{{ product.name }}</div>
+                    <div class="product-price">{{ product.price }} грн</div>
+                </a>
             </div>
         {% endfor %}
     </div>

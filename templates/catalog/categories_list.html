@@ -48,7 +48,7 @@
 {% endif %}
 
 {% if category.product_set.exists or subcategories %}
-    <a href="{% url 'products_by_category' category.slug %}" class="btn btn-secondary">
+    <a href="{% url 'category_products' category.slug %}" class="btn btn-secondary">
       Подивитися всі товари з {{ category.name }}
     </a>
 {% elif not category.product_set.exists %}
