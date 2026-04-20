@@ -23,8 +23,9 @@ from catalog.views import home
 urlpatterns = [
     path("", home, name="home"),
     path("categories/", include("catalog.urls")),
-    path('admin/', admin.site.urls),
+    path("admin/", admin.site.urls),
     path("products/", include("products.urls")),
+    path("cart/", include("cart.urls"))
 ]
 
 if settings.DEBUG:

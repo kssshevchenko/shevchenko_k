@@ -1,67 +1,9 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ product.name }}</title>
+{% extends "base.html" %}
+{% load static %}
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2e6ff;
-            padding: 20px;
-        }
+{% block title %}{{ product.name }}{% endblock %}
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #ffe6ff;
-            padding: 20px;
-            border-radius: 12px;
-        }
-
-        h1 {
-            color: #6a4fa3;
-            margin-bottom: 15px;
-        }
-
-        .product-image {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .product-image img {
-            max-width: 100%;
-            max-height: 300px;
-            border-radius: 10px;
-        }
-
-        .price {
-            font-size: 20px;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .description {
-            color: #555;
-            margin-bottom: 15px;
-        }
-
-        .back {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 8px 12px;
-            background: #e6ffe6;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #6a4fa3;
-        }
-
-        .back:hover {
-            background: #ffe6ff;
-        }
-    </style>
-</head>
-<body>
+{% block content %}
 
 <div class="container">
 
@@ -79,6 +21,11 @@
         {{ product.price }} грн
     </div>
 
+    <button class="cart-btn"
+            onclick="addToCart('{% url 'add_products' product.id %}')">
+        Додати в кошик
+    </button>
+
     {% if product.description %}
         <div class="description">
             {{ product.description }}
@@ -94,9 +41,10 @@
         </p>
     {% endif %}
 
-    <a href="{% url 'products' %}" class="back">← Назад до всіх товарів</a>
+    <a href="{% url 'products' %}" class="back">
+        ← Назад до всіх товарів
+    </a>
 
 </div>
 
-</body>
-</html>
+{% endblock %}

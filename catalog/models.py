@@ -1,12 +1,12 @@
 from django.db import models
 from django.utils.text import slugify
-
+from unidecode import unidecode
 
 
 class Categories(models.Model):
 
-    slug = models.SlugField(max_length=50, unique=True, blank=True)
     name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=50, unique=True, blank=True)
     parent = models.ForeignKey(
         'self',
         on_delete=models.CASCADE,
@@ -23,5 +23,5 @@ class Categories(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(unidecode(self.name))
         super().save(*args, **kwargs)
