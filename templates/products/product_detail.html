@@ -18,32 +18,104 @@
     </div>
 
     <div class="price">
-        {{ product.price }} грн
+        {{ product.final_price }} грн
     </div>
 
-    <button class="cart-btn"
-            onclick="addToCart('{% url 'add_products' product.id %}')">
-        Додати в кошик
-    </button>
+    <form id="productForm">
+        {% csrf_token %}
 
-    {% if product.description %}
-        <div class="description">
-            {{ product.description }}
-        </div>
-    {% endif %}
+        {# РОЗМІРИ #}
+        {% if product.sizes.all %}
+            <div class="sizes">
+                <label for="size">Оберіть розмір:</label>
+                <select name="size" id="size">
+                    {% for size in product.sizes.all %}
+                        <option value="{{ size.name }}">{{ size.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %}
 
-    {% if product.category %}
-        <p style="color:#777;">
-            Категорія:
-            <a href="{% url 'categories_details' product.category.slug %}">
-                {{ product.category.name }}
-            </a>
-        </p>
-    {% endif %}
+        {# КОЛЬОРИ #}
+        {% if product.colors.all %}
+            <div class="colors">
+                <label for="color">Оберіть колір:</label>
+                <select name="color" id="color">
+                    {% for color in product.colors.all %}
+                        <option value="{{ color.name }}">{{ color.name }}</option>
+                    {% endfor %}
+                </select>
 
-    <a href="{% url 'products' %}" class="back">
-        ← Назад до всіх товарів
-    </a>
+                <div class="color-preview">
+                    {% for color in product.colors.all %}
+                        <span class="color-dot"
+                              title="{{ color.name }}"
+                              style="background-color: {{ color.hex_code }};">
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+        {# РОЗМІЩЕННЯ ПРИНТА #}
+        {% if product.print_position_enabled %}
+            <div class="print-position">
+                <label>Розміщення принта:</label>
+                {{ form.choices_position }}
+            </div>
+        {% endif %}
+
+        {# ВИШИВКА #}
+        {% if product.embroidery_enable %}
+            <div class="embroidery">
+                <label>Вишивка:</label>
+                {{ form.choices_embroidery }}
+            </div>
+        {% endif %}
+
+        {# КІЛЬКІСТЬ НАЛІПОК #}
+        {% if product.supports_stickers %}
+            <div class="stickers-count">
+                <label>Кількість наліпок:</label>
+                {{ form.choices_count_sticker }}
+            </div>
+        {% endif %}
+        {# ВИБІР НАЛІПОК #}
+        {% if product.supports_stickers %}
+            <div class="stickers-section">
+                <label>Оберіть наліпки:</label>
+
+                <div id="stickersCounter" style="margin-top:10px; font-weight:500;">
+                    0 з 0
+                </div>
+                <div id="stickersContainer">
+                    {% for sticker in stickers %}
+                        <img src="{{ sticker.image.url }}"
+                             class="sticker-option"
+                             data-id="{{ sticker.id }}"
+                             alt="{{ sticker.name }}"
+                             style="width:80px; cursor:pointer; border:2px solid transparent;">
+                    {% endfor %}
+                </div>
+
+                {# 🔥 КНОПКА ТЕПЕР КЕРУЄТЬСЯ JS #}
+                <button type="button"
+                        class="reset-stickers-btn"
+                        onclick="resetStickers()"
+                        style="display:none; margin-top:10px; padding:6px 12px; cursor:pointer;">
+                    Очистити вибір
+                </button>
+
+            </div>
+        {% endif %}
+
+        <button type="button"
+                class="cart-btn"
+                onclick="addToCart('{% url 'cart:add_products' product.id %}')">
+            Додати в кошик
+        </button>
+
+    </form>
 
 </div>
 

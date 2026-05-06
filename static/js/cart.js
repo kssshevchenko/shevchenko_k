@@ -38,16 +38,43 @@ function loadCart() {
             }
 
             data.cart_items.forEach(item => {
+
+                let printPositionText = "";
+                if (item.print_position === "FRONT") {
+                    printPositionText = "Спереду";
+                } else if (item.print_position === "BACK") {
+                    printPositionText = "Ззаду";
+                }
+
+                let embroideryText = "";
+                if (item.embroidery === "YES") {
+                    embroideryText = "Вишивка: так<br>";
+                } else if (item.embroidery === "NO") {
+                    embroideryText = "Вишивка: ні<br>";
+                }
+
+                let stickersText = "";
+                if (item.stickers_count) {
+                    stickersText = `Кількість принтів: ${item.stickers_count}<br>`;
+                }
+
                 content.innerHTML += `
                     <div class="cart-item">
                         <strong>${item.name}</strong><br>
+
+                        ${item.size ? `Розмір: ${item.size}<br>` : ""}
+                        ${item.color ? `Колір: ${item.color}<br>` : ""}
+                        ${item.print_position ? `Розміщення принта: ${printPositionText}<br>` : ""}
+                        ${item.embroidery ? embroideryText : ""}
+                        ${stickersText}
+
                         Кількість: ${item.quantity}<br>
                         Сума: ${item.subtotal}
 
                         <div class="qty-controls">
-                            <button onclick="updateCart('/cart/increase/${item.id}/')">+</button>
-                            <button onclick="updateCart('/cart/decrease/${item.id}/')">-</button>
-                            <button onclick="updateCart('/cart/delete/${item.id}/')">✕</button>
+                            <button onclick="updateCart('/cart/increase/${item.key}/')">+</button>
+                            <button onclick="updateCart('/cart/decrease/${item.key}/')">-</button>
+                            <button onclick="updateCart('/cart/delete/${item.key}/')">✕</button>
                         </div>
                     </div>
                 `;
