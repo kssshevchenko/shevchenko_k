@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Замовлення оформлено</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .success-box {
+            padding: 20px;
+            background: #eaffea;
+            border: 1px solid #b6e6b6;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .order-block {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+        }
+
+        .item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .item img {
+            width: 100px;
+            border-radius: 8px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="success-box">
+        <h1>🎉 Дякуємо за замовлення!</h1>
+        <p>Ваше замовлення успішно створене і вже обробляється.</p>
+    </div>
+
+    <!-- ORDER INFO -->
+    <div class="order-block">
+
+        <h2>Інформація про замовлення</h2>
+
+        <p><span class="label">Номер замовлення:</span> {{ order.id }}</p>
+        <p><span class="label">Ім’я:</span> {{ order.name }} {{ order.last_name }}</p>
+        <p><span class="label">Телефон:</span> {{ order.phone }}</p>
+        <p><span class="label">Email:</span> {{ order.email }}</p>
+
+        <hr>
+
+        <p><span class="label">Доставка:</span>
+            {{ order.city }}, {{ order.street }} {{ order.building }}
+        </p>
+
+        <p><span class="label">Оплата:</span>
+            {% if order.payment == "PRE" %}
+                Оплата на реквізити
+            {% else %}
+                Оплата при отриманні
+            {% endif %}
+        </p>
+
+    </div>
+
+    <!-- ITEMS -->
+    <div class="order-block">
+
+        <h2>Товари у замовленні</h2>
+
+        {% for item in order.items.all %}
+
+            <div class="item">
+
+                {% if item.product.image %}
+                    <img src="{{ item.product.image.url }}" alt="{{ item.product_name }}">
+                {% endif %}
+
+                <div>
+                    <p><span class="label">{{ item.product_name }}</span></p>
+
+                    <p>Кількість: {{ item.quantity }}</p>
+                    <p>Ціна: {{ item.price }} грн</p>
+
+                    {% if item.sizes %}
+                        <p>Розмір: {{ item.sizes }}</p>
+                    {% endif %}
+
+                    {% if item.count_sticker and item.count_sticker != "0" %}
+                        <p>Принти: {{ item.count_sticker }}</p>
+                    {% endif %}
+
+                    {% if item.embroidery %}
+                        <p>Вишивка: {{ item.embroidery }}</p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+        <hr>
+
+        <h3>
+            Загальна сума:
+            {{ total_price }} грн
+        </h3>
+
+    </div>
+
+</body>
+</html>

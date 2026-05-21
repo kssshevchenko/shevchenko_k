@@ -4,7 +4,6 @@ from cart.forms import ProductChoices
 
 def products(request):
     products = Product.objects.all()
-    # form = ProductChoices() , "form": form
     return render(request, "products/products.html", {"products": products})
 
 def product_list(request, slug):

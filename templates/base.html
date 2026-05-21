@@ -54,6 +54,16 @@
             margin: 0 auto;
             border-radius: 10px;
         }
+
+        .checkout-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 16px;
+            background: black;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
     </style>
 </head>
 
@@ -79,7 +89,9 @@
 
     <h3 id="totalPrice"></h3>
 
-    <a href="#" class="checkout-btn">Оформити замовлення</a>
+    <a href="{% url 'create_order' %}" class="checkout-btn">
+        Оформити замовлення
+    </a>
 
 </div>
 

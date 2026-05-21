@@ -2,30 +2,129 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <title>Замовлення</title>
+    <title>Оформлення замовлення</title>
 </head>
 <body>
 
-    <h1>Сторінка замовлень</h1>
-
-    <p>Тут будуть відображатися замовлення.</p>
+    <h1>Оформлення замовлення</h1>
 
     <hr>
 
-    <h2>Список замовлень:</h2>
+    {% if products %}
 
-    <!-- приклад одного замовлення -->
-    <div>
-        <p><strong>Замовлення №1</strong></p>
-        <p>Ім'я: Катерина</p>
-        <p>Телефон: +380000000000</p>
-        <p>Статус: Нове</p>
-    </div>
+        <h2>Ваш кошик</h2>
 
-    <hr>
+        {% for item in products %}
 
-    <!-- якщо замовлень немає -->
-    <p>Замовлень поки немає.</p>
+            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+
+                {% if item.product.image %}
+                    <div>
+                        <img src="{{ item.product.image.url }}"
+                             alt="{{ item.product_name }}"
+                             width="120">
+                    </div>
+                {% endif %}
+
+                <div>
+
+                    <h3>{{ item.product_name }}</h3>
+
+                    <p>Кількість: {{ item.quantity }}</p>
+                    <p>Ціна: {{ item.price }} грн</p>
+
+                    {% if item.sizes %}
+                        <p>Розмір: {{ item.sizes }}</p>
+                    {% endif %}
+
+                    {% if item.count_sticker and item.count_sticker != "0" %}
+                        <p>Кількість принтів: {{ item.count_sticker }}</p>
+                    {% endif %}
+
+                    {% if item.sticker_position %}
+                        <p>
+                            Розміщення принта:
+                            {% if item.sticker_position == "FRONT" %}
+                                Спереду
+                            {% elif item.sticker_position == "BACK" %}
+                                Ззаду
+                            {% endif %}
+                        </p>
+                    {% endif %}
+
+                    {% if item.embroidery %}
+                        <p>
+                            Вишивка:
+                            {% if item.embroidery == "YES" %}
+                                З вишивкою
+                            {% elif item.embroidery == "NO" %}
+                                Без вишивки
+                            {% endif %}
+                        </p>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <hr>
+
+        {% endfor %}
+
+        {% if total_price %}
+            <h3>Загальна сума: {{ total_price }} грн</h3>
+        {% endif %}
+
+        <hr>
+
+        <h2>Дані для оформлення замовлення</h2>
+
+        <form method="POST" action="{% url 'create_order' %}">
+            {% csrf_token %}
+
+            <p>Ім'я: <input type="text" name="name" required></p>
+            <p>Прізвище: <input type="text" name="last_name" required></p>
+            <p>Телефон: <input type="text" name="phone" required></p>
+            <p>Email: <input type="email" name="email" required></p>
+
+            <hr>
+
+            <p>Країна: <input type="text" name="country" required></p>
+            <p>Місто: <input type="text" name="city" required></p>
+            <p>Вулиця: <input type="text" name="street" required></p>
+            <p>Будинок: <input type="text" name="building" required></p>
+            <p>Офіс: <input type="text" name="office"></p>
+            <p>Під’їзд: <input type="text" name="entrance"></p>
+            <p>Регіон: <input type="text" name="region" required></p>
+            <p>Поштовий індекс: <input type="text" name="zip_code" required></p>
+
+            <hr>
+
+            <p>
+                Спосіб оплати:
+                <select name="payment">
+                    <option value="PRE">Оплата на реквізити</option>
+                    <option value="POST">Оплата при отриманні</option>
+                </select>
+            </p>
+
+            <button type="submit">
+                Підтвердити замовлення
+            </button>
+
+        </form>
+
+    {% else %}
+
+        <h2>Кошик поки порожній</h2>
+
+        <p>
+            <a href="{% url 'products' %}">
+                Перейти до товарів
+            </a>
+        </p>
+
+    {% endif %}
 
 </body>
 </html>

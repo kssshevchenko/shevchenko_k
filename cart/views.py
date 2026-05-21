@@ -19,7 +19,7 @@ def cart_view(request):
             price = product.final_price
             add_price = price
             if item.get("embroidery") == "YES":
-                add_price += 100
+                add_price += product.surcharge
 
             subtotal = price * quantity
             total_price += subtotal
@@ -55,7 +55,7 @@ def cart_data(request):
             price = product.final_price
             add_price = price
             if item.get("embroidery") == "YES":
-                add_price += 100
+                add_price += product.surcharge
 
             subtotal = add_price * quantity
             total_price += subtotal
@@ -86,9 +86,9 @@ def add_products(request, product_id):
     key = str(uuid.uuid4())
 
     form = ProductChoices(request.POST)
-    stickers_count = 0
+    stickers_count = None
     print_position = ""
-    embroidery = ""
+    embroidery = None
     selected_stickers = []
     color = data.get('color')
     size = data.get('size')

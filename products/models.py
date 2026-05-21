@@ -29,6 +29,7 @@ class Product(models.Model):
     embroidery_enable = models.BooleanField(default=False)
     supports_stickers = models.BooleanField(default=False)
     discount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Знижка")
+    surcharge = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Доплата за вишивку")
     category = models.ForeignKey(
         Categories,
         on_delete=models.CASCADE,
