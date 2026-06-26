@@ -1,7 +1,10 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from products.models import Product
 from .models import Order, OrderItem
 from .forms import Client
+
 
 def create_order(request):
     cart = request.session.get("cart", {})
@@ -15,11 +18,9 @@ def create_order(request):
             product_obj = Product.objects.get(id=product_id)
             quantity = item.get("quantity", 1)
             price = product_obj.final_price
-            add_price = price
-            if item.get("embroidery") == "YES":
-                add_price += product_obj.surcharge
+            price += product_obj.surcharge
             count_sticker = item.get("stickers_count", 200)
-            subtotal = add_price * quantity
+            subtotal = price * quantity
             total_price += subtotal
             checkout_items = {
                 "product":product_obj,
@@ -37,20 +38,19 @@ def create_order(request):
                                                           "total_price": total_price})
 
     elif request.method == "POST":
-        print(form.is_valid())
-        print(form.errors)
         if form.is_valid():
             order = Order.objects.create(**form.cleaned_data)
+        else:
+            return JsonResponse({"error": "Перевірте правильність вводу даних"}, status=400)
+
         for key, item in cart.items():
             product_id = item.get("product_id")
             product_obj = Product.objects.get(id=product_id)
             quantity = item.get("quantity", 1)
             price = product_obj.final_price
-            add_price = price
-            if item.get("embroidery") == "YES":
-                add_price += product_obj.surcharge
+            price += product_obj.surcharge
             count_sticker = item.get("stickers_count", 200)
-            subtotal = add_price * quantity
+            subtotal = price * quantity
             total_price += subtotal
 
             OrderItem.objects.create(
@@ -66,9 +66,9 @@ def create_order(request):
             )
 
     request.session["cart"] = {}
-    print("order here", order, type(order))
-    # return render(request, "orders/orders.html", {"order": order})
-    return redirect("order_success", order_id = order.id)
+    return JsonResponse({
+        "success_url": reverse("checkout:order_success", kwargs={"order_id": order.id})
+    })
 
 def order_success(request, order_id):
     order = Order.objects.get(id=order_id)

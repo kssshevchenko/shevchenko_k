@@ -38,10 +38,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'catalog',
     'products',
     'cart',
     'orders',
+    'content',
 ]
 
 MIDDLEWARE = [
@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'trapatonni_brooch.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
+        'NAME': 'project_trapatonni_brooch_db',
         'USER': 'postgres',
         'PASSWORD': '123456',
         'HOST': 'localhost',
@@ -130,7 +130,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

@@ -74,7 +74,7 @@
 <div class="grid">
     {% for category in categories %}
         <div class="card">
-            <a href="{% url 'categories_details' category.slug %}">
+            <a href="{% url 'category_products' category.slug %}">
                 {% if category.image %}
                     <img src="{{ category.image.url }}" alt="{{ category.name }}">
                 {% endif %}

@@ -4,18 +4,18 @@ from products.models import Product
 
 
 class Order(models.Model):
-    name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=100)
-    phone = models.CharField(max_length=15)
-    email = models.EmailField(max_length=100)
-    country = models.CharField(max_length=50, default=1)
-    city = models.CharField(max_length=50, default=1)
-    street = models.CharField(max_length=100, default=1)
-    building = models.CharField(max_length=10, default=1)
-    office = models.CharField(max_length=10, default=1)
-    entrance = models.CharField(max_length=10, default=1)
-    region = models.CharField(max_length=10, default=1)
-    zip_code = models.CharField(max_length=10, default=1)
+    name = models.CharField(max_length=50, blank=False, null=False)
+    last_name = models.CharField(max_length=100, blank=False, null=False)
+    phone = models.CharField(max_length=15, blank=False, null=False)
+    email = models.EmailField(max_length=100, blank=False, null=False)
+    country = models.CharField(max_length=50, blank=False, null=False)
+    city = models.CharField(max_length=50, blank=False, null=False)
+    street = models.CharField(max_length=100, blank=False, null=False)
+    building = models.CharField(max_length=10, blank=False, null=False)
+    office = models.CharField(max_length=10, blank=True, null=True)
+    entrance = models.CharField(max_length=50, blank=True, null=True)
+    region = models.CharField(max_length=50, blank=False, null=False)
+    zip_code = models.CharField(max_length=20, blank=False, null=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
 

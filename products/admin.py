@@ -1,7 +1,23 @@
 from django.contrib import admin
-from .models import Product, Size, Color, Stickers
+from .models import Product, Size, Color, ProductImage, Categories, ProductType
 
-admin.site.register(Product)
+
+@admin.register(ProductType)
+class ProductTypeAdmin(admin.ModelAdmin):
+    list_display = ("name", "categories")
+    list_filter = ("categories",)
+    ordering = ("categories__name", "name")
+
+class ProductImageInline(admin.TabularInline):
+    model = ProductImage
+    extra = 3
+
+class ProductImageAdmin(admin.ModelAdmin):
+    inlines = [ProductImageInline]
+
 admin.site.register(Size)
 admin.site.register(Color)
-admin.site.register(Stickers)
+admin.site.register(Product, ProductImageAdmin)
+admin.site.register(Categories)
+
+

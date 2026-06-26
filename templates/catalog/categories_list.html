@@ -47,7 +47,7 @@
     <p class="empty">Підкатегорій немає</p>
 {% endif %}
 
-{% if category.product_set.exists or subcategories %}
+{% if category.product_set.exists %}
     <a href="{% url 'category_products' category.slug %}" class="btn btn-secondary">
       Подивитися всі товари з {{ category.name }}
     </a>
@@ -56,7 +56,7 @@
 {% endif %}
 
 <div>
-    <a href="/categories/" class="back">← Назад до всіх категорій</a>
+    <a href="/products/categories/" class="back">← Назад до всіх категорій</a>
 </div>
 
 </body>

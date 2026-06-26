@@ -15,6 +15,38 @@
             margin-bottom: 20px;
         }
 
+        .filters {
+            background: #ffe6ff;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filters form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filters select,
+        .filters button {
+            padding: 8px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        .filters button {
+            cursor: pointer;
+            background: #e6ffe6;
+            color: #6a4fa3;
+            font-weight: bold;
+        }
+
+        .filters button:hover {
+            background: #d7ffd7;
+        }
+
         .grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -65,7 +97,18 @@
         }
 
         @media (max-width: 768px) {
-            .product-card { width: 100%; }
+            .product-card {
+                width: 100%;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filters form {
+                flex-direction: column;
+                align-items: stretch;
+            }
         }
     </style>
 </head>
@@ -73,6 +116,51 @@
 
 <h1>Товари</h1>
 
+{% if filters %}
+<div class="filters">
+    <form method="get">
+
+        {% for filter in filters %}
+            <select name="{{ filter.name }}">
+                <option value="">{{ filter.label }}</option>
+
+                {% for option in filter.options %}
+                    <option
+                        value="{{ option.value }}"
+                        {% if request.GET|get_item:filter.name == option.value|stringformat:"s" %}
+                            selected
+                        {% endif %}
+                    >
+                        {{ option.label }}
+                    </option>
+                {% endfor %}
+            </select>
+        {% endfor %}
+
+        <button type="submit">Фільтрувати</button>
+
+    </form>
+</div>
+{% endif %}
+<div class="filters">
+    <form method="get">
+
+        <select name="product_type">
+            <option value="">Усі типи товарів</option>
+
+            {% for product_type in product_types %}
+                <option value="{{ product_type.id }}">
+                    {{ product_type.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">
+            Фільтрувати
+        </button>
+
+    </form>
+</div>
 {% if products %}
     <div class="grid">
         {% for product in products %}
@@ -91,7 +179,7 @@
     <p>Товарів у цій категорії поки немає.</p>
 {% endif %}
 
-<a href="/categories/" class="back">← Назад до категорій</a>
+<a href="/products/categories/" class="back">← Назад до категорій</a>
 
 </body>
 </html>

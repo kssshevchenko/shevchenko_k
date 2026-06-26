@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -18,9 +20,9 @@
 
             <div style="display: flex; gap: 20px; margin-bottom: 20px;">
 
-                {% if item.product.image %}
+                {% if item.product.images.first.image.url %}
                     <div>
-                        <img src="{{ item.product.image.url }}"
+                        <img src="{{ item.product.images.first.image.url }}"
                              alt="{{ item.product_name }}"
                              width="120">
                     </div>
@@ -79,7 +81,7 @@
 
         <h2>Дані для оформлення замовлення</h2>
 
-        <form method="POST" action="{% url 'create_order' %}">
+        <form id="checkoutForm" method="POST" action="{% url 'checkout:create_order' %}">
             {% csrf_token %}
 
             <p>Ім'я: <input type="text" name="name" required></p>
@@ -107,7 +109,7 @@
                     <option value="POST">Оплата при отриманні</option>
                 </select>
             </p>
-
+            <p id="formError" style="color: red; font-weight: bold;"></p>
             <button type="submit">
                 Підтвердити замовлення
             </button>
@@ -125,6 +127,11 @@
         </p>
 
     {% endif %}
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+
+<script src="{% static 'js/checkout.js' %}"></script>
 
 </body>
 </html>

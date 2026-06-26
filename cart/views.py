@@ -13,13 +13,13 @@ def cart_view(request):
 
     for key, item in cart.items():
         try:
+
             product = Product.objects.get(id=item["product_id"])
 
             quantity = item["quantity"]
             price = product.final_price
-            add_price = price
             if item.get("embroidery") == "YES":
-                add_price += product.surcharge
+                price += product.surcharge
 
             subtotal = price * quantity
             total_price += subtotal
@@ -53,11 +53,10 @@ def cart_data(request):
             quantity = item.get("quantity", 1)
             product = Product.objects.get(id=product_id)
             price = product.final_price
-            add_price = price
             if item.get("embroidery") == "YES":
-                add_price += product.surcharge
+                price += product.surcharge
 
-            subtotal = add_price * quantity
+            subtotal = price * quantity
             total_price += subtotal
 
             cart_items.append({

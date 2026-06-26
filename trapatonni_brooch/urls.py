@@ -18,15 +18,15 @@ from django.contrib import admin
 from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
-from catalog.views import home
+from products.views import home
 
 urlpatterns = [
     path("", home, name="home"),
-    path("categories/", include("catalog.urls")),
     path("admin/", admin.site.urls),
     path("products/", include("products.urls")),
     path('cart/', include('cart.urls', namespace='cart')),
-    path("checkout/", include("orders.urls"))
+    path("checkout/", include("orders.urls", namespace='checkout')),
+    path("home/", include("content.urls"))
 ]
 
 if settings.DEBUG:
