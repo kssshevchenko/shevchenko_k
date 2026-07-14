@@ -1,0 +1,463 @@
+/* ================================================= */
+/*                ОСНОВНИЙ МАКЕТ                     */
+/* ================================================= */
+/* ===== НАЗВА ТОВАРУ ===== */
+
+
+
+.product-title {
+
+    margin: 0 0 25px;
+
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.2;
+
+    color: #222;
+
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.product-layout {
+
+    display: flex;
+    /* ===== ТУТ ЗМІНЮЄТЬСЯ ВІДСТУП МІЖ ФОТО І ОПИСОМ ===== */
+    gap: 50px;
+
+    align-items: flex-start;
+
+    margin-top: 30px;
+}
+
+.product-left {
+    /* ===== ТУТ ЗМІНЮЄТЬСЯ ШИРИНА БЛОКУ З ФОТО ===== */
+    flex: 0 0 450px;
+    min-width: 320px;
+}
+
+.product-right {
+    /* ===== ТУТ ЗМІНЮЄТЬСЯ ШИРИНА ПРАВОГО БЛОКУ ===== */
+    flex: 0 0 550px;
+    min-width: 320px;
+}
+
+
+/* ================================================= */
+/*                 PRODUCT DETAIL                    */
+/* ================================================= */
+
+/* ===== КОНТЕЙНЕР ===== */
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.product-gallery-img {
+
+    /* ===== ТУТ ЗМІНЮЄТЬСЯ РОЗМІР ФОТО ===== */
+    width: 450px;
+    height: 450px;
+
+    object-fit: cover;
+
+    border-radius: 16px;
+}
+
+/* ===== ЦІНА ===== */
+
+/* ===== БЛОК ЦІНИ ===== */
+
+.price{
+
+    margin:30px 0;
+
+    padding:18px 24px;
+
+    background:#fff7fb;
+
+    border-radius:16px;
+
+    display:inline-flex;
+    align-items:center;
+    gap:14px;
+    margin-bottom: 1px;
+    margin-top: 1px;
+}
+
+#originalPrice {
+    font-size:20px;
+    color: #888;
+    text-decoration: line-through;
+}
+
+#finalPrice {
+
+    /* ===== ТУТ ЗМІНЮЄТЬСЯ КОЛІР ЦІНИ ===== */
+    color: #d63384;
+
+    font-size: 25px;
+    font-weight: bold;
+}
+.price {
+
+    margin: 10px 0 15px;
+
+    display: inline-block;
+
+    padding: 18px 24px;
+
+    background: #fff7fb;
+
+    border-radius: 16px;
+}
+
+.product-status {
+    margin-top: 8px;
+}
+.price-row{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+/* ===== ФОРМА ===== */
+
+form {
+    margin-top: 30px;
+}
+
+
+/* ===== LABEL ===== */
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* ===== SELECT ===== */
+
+select {
+
+    width: 100%;
+    max-width: 120px;
+
+    padding: 10px 14px;
+
+    border: 1px solid #ccc;
+    border-radius: 10px;
+
+    background: white;
+}
+
+/* ================================================= */
+/*                    КОЛЬОРИ                        */
+/* ================================================= */
+
+.colors-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.color-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.color-option input {
+    display: none;
+}
+
+.color-circle {
+
+    width: 38px;
+    height: 38px;
+
+    border-radius: 50%;
+    border: 2px solid #ccc;
+
+    background-size: cover;
+    background-position: center;
+
+    cursor: pointer;
+    transition: .2s;
+}
+
+.color-circle:hover {
+    transform: scale(1.08);
+}
+
+.color-option input:checked + .color-circle {
+
+    border: 3px solid #000;
+    transform: scale(1.1);
+}
+
+.color-name {
+
+    margin-top: 6px;
+
+    font-size: 13px;
+    color: #555;
+
+    text-align: center;
+}
+
+/* ================================================= */
+/*                    НАЛІПКИ                        */
+/* ================================================= */
+
+#stickersCounter {
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+#stickersContainer {
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+    margin-top: 15px;
+}
+
+.sticker-option {
+
+    width: 80px;
+    height: 80px;
+
+    object-fit: cover;
+
+    border-radius: 12px;
+    border: 2px solid transparent;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.sticker-option:hover {
+    transform: scale(1.05);
+}
+
+.reset-stickers-btn {
+
+    margin-top: 15px;
+
+    padding: 8px 14px;
+
+    border: none;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    background: #f4eef8;
+}
+/* ===== НАЛІПКИ В ОДНІЙ СІТЦІ З ІНШИМИ ПОЛЯМИ ===== */
+
+.stickers-section{
+
+    display:flex;
+    align-items:flex-start;
+    gap:35px;
+
+    margin-top:24px;
+}
+
+.stickers-section > label{
+
+    width:var(--product-label-width);
+    flex-shrink:0;
+
+    margin:0;
+}
+
+.stickers-content{
+
+    flex:1;
+}
+
+/* ===== ШИРИНА КОЛОНКИ З НАЗВАМИ ===== */
+
+:root{
+    --product-label-width: 180px;
+}
+
+/* ================================================= */
+/*                 КНОПКА КОШИКА                     */
+/* ================================================= */
+
+.cart-btn {
+
+    margin-top: 35px;
+
+    padding: 14px 24px;
+
+    border: none;
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    transition: .2s;
+
+    /* ===== ТУТ ЗМІНЮЄТЬСЯ КОЛІР КНОПКИ ===== */
+    background: #cdb7e8;
+}
+
+.cart-btn:hover {
+
+    /* ===== ТУТ ЗМІНЮЄТЬСЯ КОЛІР ПРИ НАВЕДЕННІ ===== */
+    background: #b89ad9;
+}
+
+/* ================================================= */
+/*                 МОБІЛЬНА ВЕРСІЯ                   */
+/* ================================================= */
+
+@media (max-width:768px) {
+
+    .container {
+        margin: 20px auto;
+    }
+
+    .product-gallery {
+        justify-content: center;
+    }
+
+    .product-gallery-img {
+        max-width: 100%;
+    }
+
+    .colors-list {
+        justify-content: center;
+    }
+
+    select {
+        max-width: 100%;
+        max-width: 120px; /* ← тут можна змінювати */
+    }
+
+    .cart-btn {
+        width: 100%;
+    }
+    .product-layout {
+
+    flex-direction: column;
+    }
+
+    .product-left,
+    .product-right{
+        flex:1 1 auto;
+        min-width:0;
+        width:100%;
+    }
+}
+
+.sizes,
+.colors,
+.print-position,
+.embroidery,
+.stickers-count{
+
+    display:flex;
+    align-items:flex-start;
+
+    gap:30px;
+
+    margin-top:15px;
+}
+
+.sizes label,
+.colors > label,
+.print-position > label,
+.embroidery > label,
+.stickers-count > label{
+
+    width: 180px;
+
+    flex-shrink: 0;
+
+    margin: 0;
+}
+@media (max-width: 1000px) {
+
+    .product-layout {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .product-left,
+    .product-right {
+        width: 100%;
+        max-width: none;
+    }
+
+    .product-gallery {
+        justify-content: center;
+    }
+    /* ===== ШИРИНА ВИПАДАЮЧИХ СПИСКІВ ===== */
+
+    select{
+        width:100%;
+        max-width:420px; /* ← тут можна змінювати */
+    }
+}
+@media (max-width:420px){
+
+    .sizes,
+    .colors,
+    .print-position,
+    .embroidery,
+    .stickers-count,
+    .stickers-section{
+
+        flex-direction:column;
+        gap:10px;
+    }
+
+    .sizes label,
+    .colors>label,
+    .print-position>label,
+    .embroidery>label,
+    .stickers-count>label,
+    .stickers-section>label{
+
+        width:auto;
+    }
+
+}
+/* ===== ПОВІДОМЛЕННЯ ПРО ПОМИЛКУ ===== */
+
+.field-error{
+
+    display:none;
+
+    margin-top:10px;
+
+    padding:10px 14px;
+
+    border-radius:10px;
+
+    background:#fff2f6;
+    border:1px solid #f3bfd2;
+
+    color:#b54878;
+
+    font-size:14px;
+    font-weight:500;
+}
+
+.field-error.show{
+    display:block;
+}

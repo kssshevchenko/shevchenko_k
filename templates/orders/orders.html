@@ -1,137 +1,382 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <title>Оформлення замовлення</title>
-</head>
-<body>
+{% block title %}
+Оформлення замовлення
+{% endblock %}
 
-    <h1>Оформлення замовлення</h1>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/checkout.css' %}">
+{% endblock %}
 
-    <hr>
+{% block content %}
+
+<div class="checkout-page">
+
+    <h1 class="checkout-title">
+        Оформлення замовлення
+    </h1>
 
     {% if products %}
 
-        <h2>Ваш кошик</h2>
+    <div class="checkout-products">
 
-        {% for item in products %}
+        <div class="checkout-products-list">
 
-            <div style="display: flex; gap: 20px; margin-bottom: 20px;">
+            <h2 class="checkout-section-title">
+                Ваше замовлення
+            </h2>
 
-                {% if item.product.images.first.image.url %}
-                    <div>
-                        <img src="{{ item.product.images.first.image.url }}"
-                             alt="{{ item.product_name }}"
-                             width="120">
+            {% for item in products %}
+
+                <div class="checkout-item">
+
+                    <div class="checkout-image">
+
+                        {% if item.product.images.first %}
+                            <img
+                                src="{{ item.product.images.first.image.url }}"
+                                alt="{{ item.product_name }}">
+                        {% endif %}
+
                     </div>
-                {% endif %}
 
-                <div>
+                    <div class="checkout-info">
 
-                    <h3>{{ item.product_name }}</h3>
+                        <h3>{{ item.product_name }}</h3>
 
-                    <p>Кількість: {{ item.quantity }}</p>
-                    <p>Ціна: {{ item.price }} грн</p>
-
-                    {% if item.sizes %}
-                        <p>Розмір: {{ item.sizes }}</p>
-                    {% endif %}
-
-                    {% if item.count_sticker and item.count_sticker != "0" %}
-                        <p>Кількість принтів: {{ item.count_sticker }}</p>
-                    {% endif %}
-
-                    {% if item.sticker_position %}
                         <p>
-                            Розміщення принта:
-                            {% if item.sticker_position == "FRONT" %}
-                                Спереду
-                            {% elif item.sticker_position == "BACK" %}
-                                Ззаду
-                            {% endif %}
+                            <span>Кількість:</span>
+                            {{ item.quantity }}
                         </p>
-                    {% endif %}
 
-                    {% if item.embroidery %}
                         <p>
-                            Вишивка:
-                            {% if item.embroidery == "YES" %}
-                                З вишивкою
-                            {% elif item.embroidery == "NO" %}
-                                Без вишивки
-                            {% endif %}
+                            <span>Ціна:</span>
+                            {{ item.price }} грн
                         </p>
-                    {% endif %}
+
+                        {% if item.sizes %}
+                            <p>
+                                <span>Розмір:</span>
+                                {{ item.sizes }}
+                            </p>
+                        {% endif %}
+
+                        {% if item.count_sticker and item.count_sticker != "0" %}
+                            <p>
+                                <span>Кількість принтів:</span>
+                                {{ item.count_sticker }}
+                            </p>
+                        {% endif %}
+
+                        {% if item.sticker_position %}
+                            <p>
+
+                                <span>Розміщення принта:</span>
+
+                                {% if item.sticker_position == "FRONT" %}
+                                    Спереду
+                                {% elif item.sticker_position == "BACK" %}
+                                    Ззаду
+                                {% endif %}
+
+                            </p>
+                        {% endif %}
+
+                        {% if item.embroidery %}
+                            <p>
+
+                                <span>Вишивка:</span>
+
+                                {% if item.embroidery == "YES" %}
+                                    З вишивкою
+                                {% else %}
+                                    Без вишивки
+                                {% endif %}
+
+                            </p>
+                        {% endif %}
+
+                    </div>
 
                 </div>
 
+            {% endfor %}
+
+        </div>
+
+
+        <div class="checkout-total">
+
+            <h3>Разом</h3>
+
+            <div class="checkout-total-price">
+                {{ total_price }} грн
             </div>
 
-            <hr>
+        </div>
 
-        {% endfor %}
+    </div>
 
-        {% if total_price %}
-            <h3>Загальна сума: {{ total_price }} грн</h3>
-        {% endif %}
 
-        <hr>
 
-        <h2>Дані для оформлення замовлення</h2>
+    <form
+            id="checkoutForm"
+            class="checkout-form"
+            method="POST"
+            action="{% url 'checkout:create_order' %}">
 
-        <form id="checkoutForm" method="POST" action="{% url 'checkout:create_order' %}">
-            {% csrf_token %}
+        {% csrf_token %}
 
-            <p>Ім'я: <input type="text" name="name" required></p>
-            <p>Прізвище: <input type="text" name="last_name" required></p>
-            <p>Телефон: <input type="text" name="phone" required></p>
-            <p>Email: <input type="email" name="email" required></p>
+        <div class="checkout-columns">
 
-            <hr>
+            <div class="checkout-column">
 
-            <p>Країна: <input type="text" name="country" required></p>
-            <p>Місто: <input type="text" name="city" required></p>
-            <p>Вулиця: <input type="text" name="street" required></p>
-            <p>Будинок: <input type="text" name="building" required></p>
-            <p>Офіс: <input type="text" name="office"></p>
-            <p>Під’їзд: <input type="text" name="entrance"></p>
-            <p>Регіон: <input type="text" name="region" required></p>
-            <p>Поштовий індекс: <input type="text" name="zip_code" required></p>
+                <h2>
+                    Контактні дані
+                </h2>
 
-            <hr>
+                <p>
+
+                    <label for="name">Ім'я</label>
+
+                    <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            required>
+
+                </p>
+
+                <p>
+
+                    <label for="last_name">Прізвище</label>
+
+                    <input
+                            id="last_name"
+                            type="text"
+                            name="last_name"
+                            required>
+
+                </p>
+
+                <p>
+
+                    <label for="phone">Телефон</label>
+
+                    <input
+                            id="phone"
+                            type="text"
+                            name="phone"
+                            required>
+
+                </p>
+
+                <p>
+
+                    <label for="email">Email</label>
+
+                    <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            required>
+
+                </p>
+                            <h2>
+                Оплата
+            </h2>
 
             <p>
-                Спосіб оплати:
-                <select name="payment">
-                    <option value="PRE">Оплата на реквізити</option>
-                    <option value="POST">Оплата при отриманні</option>
-                </select>
-            </p>
-            <p id="formError" style="color: red; font-weight: bold;"></p>
-            <button type="submit">
-                Підтвердити замовлення
-            </button>
 
-        </form>
+                <label for="payment">
+                    Спосіб оплати
+                </label>
+
+                <select
+                        id="payment"
+                        name="payment">
+
+                    <option value="PRE">
+                        Оплата на реквізити
+                    </option>
+
+                    <option value="POST">
+                        Оплата при отриманні
+                    </option>
+
+                </select>
+
+            </p>
+
+            <p>
+
+            </div>
+
+
+            <div class="checkout-column">
+
+                <h2>
+                    Адреса доставки
+                </h2>
+
+                <p>
+
+                    <label for="country">Країна</label>
+
+                    <input
+                            id="country"
+                            type="text"
+                            name="country"
+                            required>
+
+                </p>
+
+                <p>
+
+                    <label for="city">Місто</label>
+
+                    <input
+                            id="city"
+                            type="text"
+                            name="city"
+                            required>
+
+                </p>
+
+                <p>
+
+                    <label for="region">Регіон</label>
+
+                    <input
+                            id="region"
+                            type="text"
+                            name="region"
+                            required>
+
+                </p>
+
+                <p>
+
+                    <label for="street">Вулиця</label>
+
+                    <input
+                            id="street"
+                            type="text"
+                            name="street"
+                            required>
+
+                </p>
+
+                <p>
+
+                    <label for="building">Будинок</label>
+
+                    <input
+                            id="building"
+                            type="text"
+                            name="building"
+                            required>
+
+                </p>
+
+                <p>
+
+                    <label for="entrance">Під'їзд</label>
+
+                    <input
+                            id="entrance"
+                            type="text"
+                            name="entrance">
+
+                </p>
+
+                <p>
+
+                    <label for="office">Квартира / офіс</label>
+
+                    <input
+                            id="office"
+                            type="text"
+                            name="office">
+
+                </p>
+
+                <p>
+
+                    <label for="zip_code">Поштовий індекс</label>
+
+                    <input
+                            id="zip_code"
+                            type="text"
+                            name="zip_code"
+                            required>
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="checkout-payment">
+
+
+
+                <label for="comment">
+                    Коментар до замовлення
+                </label>
+
+                <textarea
+                        id="comment"
+                        name="comment"
+                        rows="4"
+                        placeholder="За бажанням можна залишити коментар до замовлення"></textarea>
+
+            </p>
+
+        </div>
+
+        <p id="formError"></p>
+
+        <button type="submit">
+            Підтвердити замовлення
+        </button>
+
+    </form>
 
     {% else %}
 
-        <h2>Кошик поки порожній</h2>
+        <div class="empty-checkout">
 
-        <p>
-            <a href="{% url 'products' %}">
-                Перейти до товарів
-            </a>
+            <h2>
+                Кошик поки порожній
+            </h2>
+
+            <p>
+
+                <a href="{% url 'products' %}">
+                    Перейти до товарів
+                </a>
+
+            </p>
+
+        </div>
+
+    {% endif %}
+
+    {% if error %}
+
+        <p id="formError">
+            {{ error }}
         </p>
 
     {% endif %}
-    {% if error %}
-        <p>{{ error }}</p>
-    {% endif %}
 
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
 <script src="{% static 'js/checkout.js' %}"></script>
-
-</body>
-</html>
+{% endblock %}

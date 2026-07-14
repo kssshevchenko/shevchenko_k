@@ -12,12 +12,14 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 3
 
-class ProductImageAdmin(admin.ModelAdmin):
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "price")
     inlines = [ProductImageInline]
+
 
 admin.site.register(Size)
 admin.site.register(Color)
-admin.site.register(Product, ProductImageAdmin)
+admin.site.register(Product, ProductAdmin)
 admin.site.register(Categories)
 
 

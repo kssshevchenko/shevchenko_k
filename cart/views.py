@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from products.models import Product
+from django.shortcuts import render, redirect, get_object_or_404
+from products.models import Product, ProductImage, Color
 from .forms import ProductChoices
 from django.http import JsonResponse
 import uuid
@@ -50,6 +50,10 @@ def cart_data(request):
     for key, item in cart.items():
         try:
             product_id = item["product_id"]
+
+            images = ProductImage.objects.filter(id=product_id)
+            image = images.first().image.url
+
             quantity = item.get("quantity", 1)
             product = Product.objects.get(id=product_id)
             price = product.final_price
@@ -62,6 +66,7 @@ def cart_data(request):
             cart_items.append({
                 "key": key,
                 "name": product.name,
+                "image": image,
                 "quantity": quantity,
                 "size": item.get("size"),
                 "color": item.get("color"),
@@ -78,18 +83,25 @@ def cart_data(request):
         "total_price": total_price
     })
 
+
 def add_products(request, product_id):
     cart = request.session.get("cart", {})
 
     data = request.POST
     key = str(uuid.uuid4())
-
     form = ProductChoices(request.POST)
+
     stickers_count = None
     print_position = ""
     embroidery = None
     selected_stickers = []
-    color = data.get('color')
+    color = ""
+    colors = Color.objects.filter(product=product_id)
+    if colors and data.get("color") == None:
+        return JsonResponse({"error": "Оберіть колір"}, status=400)
+    elif colors and data.get("color"):
+        color = data.get('color')
+
     size = data.get('size')
 
     if form.is_valid():
@@ -97,21 +109,23 @@ def add_products(request, product_id):
         print_position = form.cleaned_data["choices_position"]
         embroidery = form.cleaned_data["choices_embroidery"]
 
+
     signature = f"{product_id}_{color}_{size}_{print_position}_{embroidery}_{stickers_count}"
 
     if stickers_count and int(stickers_count) > 0:
         selected_stickers = data.getlist("sticker_id")
+        print("selected_stickers", selected_stickers)
         if len(selected_stickers) > stickers_count:
             selected_stickers = data.getlist("sticker_id")[-stickers_count:]
-            print(selected_stickers)
         elif stickers_count != len(selected_stickers):
-            return JsonResponse({"error": "неправильна кількість наліпок"}, status=400)
+            return JsonResponse({"error": "Неправильна кількість наліпок"}, status=400)
 
     found_key = None
+
     for k, product in cart.items():
+
         if signature == product.get("signature"):
             found_key = k
-
     if found_key:
         cart[found_key]["quantity"] += 1
     else:

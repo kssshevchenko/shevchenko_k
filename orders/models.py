@@ -16,7 +16,7 @@ class Order(models.Model):
     entrance = models.CharField(max_length=50, blank=True, null=True)
     region = models.CharField(max_length=50, blank=False, null=False)
     zip_code = models.CharField(max_length=20, blank=False, null=False)
-
+    comment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Payment(models.TextChoices):
@@ -41,9 +41,11 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name="order_items", on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    color = models.CharField(max_length=50, blank=True, null=True, verbose_name="Колір")
     quantity = models.PositiveIntegerField(default=1)
     product_name = models.CharField(max_length=20, default="Product")
     sizes = models.CharField(max_length=10, blank=True, null=True, verbose_name="Розмір")
+    stickers = models.CharField(max_length=100, blank=True, null=True, verbose_name="Стікери")
     count_sticker = models.CharField(
         max_length=20,
         choices=[(1, "1 принт"), (3, "3 принти"),],

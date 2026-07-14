@@ -1,0 +1,393 @@
+/* ================================================= */
+/*                 СТОРІНКА CHECKOUT                 */
+/* ================================================= */
+
+.checkout-page {
+    width: 65%;
+    max-width: 1600px;
+    margin: 50px auto;
+}
+
+/* ================================================= */
+/*                     ЗАГОЛОВОК                     */
+/* ================================================= */
+
+.checkout-title {
+    margin-bottom: 35px;
+    padding-bottom: 15px;
+
+    text-align: center;
+
+    font-size: 28px;
+    font-weight: 700;
+
+    border-bottom: 1px solid #ececec;
+}
+/* ================================================= */
+/*        БЛОК ТОВАРІВ + ЗАГАЛЬНА СУМА               */
+/* ================================================= */
+
+.checkout-products {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+
+    margin-bottom: 50px;
+}
+.checkout-products-list {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+/* ================================================= */
+/*                БЛОК ТОВАРІВ                       */
+/* ================================================= */
+
+.checkout-item {
+    display: flex;
+    gap: 20px;
+
+    padding: 18px;
+
+    margin-bottom: 18px;
+
+    border: 1px solid #ececec;
+    border-radius: 12px;
+
+    background: #fff;
+}
+
+.checkout-image {
+    flex: 0 0 90px;
+}
+
+.checkout-image img {
+    width: 90px;
+    height: 90px;
+
+    display: block;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+.checkout-info {
+    flex: 1;
+}
+
+.checkout-info h3 {
+    margin-bottom: 12px;
+
+    font-size: 18px;
+}
+
+.checkout-info p {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    margin-bottom: 8px;
+}
+
+.checkout-info span {
+    color: #666;
+    font-weight: 600;
+}
+.checkout-section-title {
+    margin-bottom: 25px;
+
+    font-size: 22px;
+}
+/* ================================================= */
+/*                  ЗАГАЛЬНА СУМА                    */
+/* ================================================= */
+
+.checkout-total {
+    position: sticky;
+    top: 30px;
+
+    width: 260px;
+
+    padding: 18px;
+
+    border: 1px solid #ececec;
+    border-radius: 12px;
+
+    background: #fafafa;
+
+}
+
+.checkout-total h3 {
+    margin-bottom: 18px;
+
+    text-align: center;
+    font-size: 20px;
+}
+
+.checkout-total-price {
+    text-align: center;
+
+    font-size: 28px;
+    font-weight: 700;
+
+    color: #222;
+}
+
+/* ================================================= */
+/*                 ФОРМА                             */
+/* ================================================= */
+
+.checkout-form {
+    margin-top: 40px;
+}
+
+.checkout-column h2,
+.checkout-payment h2 {
+    margin-bottom: 22px;
+    padding-bottom: 10px;
+
+    font-size: 22px;
+
+    border-bottom: 1px solid #ececec;
+}
+/* ================================================= */
+/*                  ДВІ КОЛОНКИ                      */
+/* ================================================= */
+
+.checkout-columns {
+    display: flex;
+
+    width: 100%;
+
+    gap: 60px;
+
+    align-items: flex-start;
+}
+
+.checkout-column {
+    flex: 1 1 0;
+}
+/* ================================================= */
+/*                     ПОЛЯ                          */
+/* ================================================= */
+
+.checkout-form p {
+    margin-bottom: 6px;
+}
+
+.checkout-form label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-weight: 600;
+}
+
+.checkout-form input,
+.checkout-form select,
+.checkout-form textarea {
+    width: 100%;
+
+    padding: 6px;
+
+    font-size: 15px;
+
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    resize: vertical;
+    transition: .2s;
+}
+
+
+
+.checkout-form input:focus,
+.checkout-form select:focus,
+.checkout-form textarea:focus {
+
+    outline: none;
+
+    border-color: #d7b8e7;
+
+    box-shadow: 0 0 0 3px rgba(215,184,231,.18);
+}
+
+/* ================================================= */
+/*                     ПОМИЛКА                       */
+/* ================================================= */
+
+#formError {
+    margin-top: 20px;
+
+    color: #d9534f;
+    font-weight: 600;
+}
+
+/* ================================================= */
+/*                     КНОПКА                        */
+/* ================================================= */
+
+.checkout-form button {
+    margin: 30px auto 0;
+    display: block;
+    width: 350px;
+    max-width: 100%;
+
+    padding: 15px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #222;
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.checkout-form button:hover {
+    background: #444;
+}
+
+/* ================================================= */
+/*                ПОРОЖНІЙ КОШИК                     */
+/* ================================================= */
+
+.empty-checkout {
+    margin: 70px 0;
+
+    text-align: center;
+}
+
+.empty-checkout h2 {
+    margin-bottom: 20px;
+}
+
+.empty-checkout a {
+    color: #222;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.empty-checkout a:hover {
+    text-decoration: underline;
+}
+
+/* ================================================= */
+/*                    ОПЛАТА                         */
+/* ================================================= */
+
+.checkout-payment {
+    margin-bottom: 40px;
+}
+/* ================================================= */
+/*                 АДАПТИВ < 1000px                  */
+/* ================================================= */
+
+@media (max-width: 1000px) {
+
+    .checkout-page {
+        max-width: 750px;
+        padding: 0 20px;
+    }
+
+    /* товари + сума */
+    .checkout-products {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+    }
+
+    .checkout-total {
+        position: static;
+
+        width: 320px;
+        max-width: 100%;
+
+        margin: 0 auto;
+
+        padding: 18px 20px;
+    }
+
+    /* форма */
+    .checkout-columns {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .checkout-column {
+        width: 100%;
+    }
+
+    .checkout-payment {
+        margin-bottom: 30px;
+    }
+
+    .checkout-form button {
+        width: 100%;
+    }
+
+}
+
+/* ================================================= */
+/*                 АДАПТИВ < 600px                   */
+/* ================================================= */
+
+@media (max-width: 600px) {
+
+    .checkout-page {
+        width: 100%;
+        margin: 20px 0;
+        padding: 0 12px;
+    }
+
+    .checkout-title {
+        font-size: 24px;
+        margin-bottom: 25px;
+    }
+
+    .checkout-item {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .checkout-image {
+        flex: 0 0 70px;
+    }
+
+    .checkout-image img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .checkout-info h3 {
+        font-size: 16px;
+    }
+
+    .checkout-info p {
+        font-size: 14px;
+        gap: 10px;
+    }
+
+    .checkout-total {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .checkout-total h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .checkout-total-price {
+        font-size: 24px;
+    }
+
+    .checkout-form button {
+        width: 100%;
+    }
+}

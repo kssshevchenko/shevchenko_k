@@ -7,6 +7,8 @@ class OrderInline(admin.TabularInline):
     extra = 20
 
 class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "last_name", "phone")
+    list_filter = ("phone",)
     inlines = [OrderInline]
 
 admin.site.register(Order, OrderItemAdmin)

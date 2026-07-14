@@ -11,9 +11,11 @@ def create_order(request):
     form = Client(request.POST)
     total_price = 0
     products = []
-    if request.method == "GET":
 
+    if request.method == "GET":
         for key, item in cart.items():
+            stickers = item.get("selected_stickers")
+            print("stickers Order", stickers)
             product_id = item.get("product_id")
             product_obj = Product.objects.get(id=product_id)
             quantity = item.get("quantity", 1)
@@ -24,6 +26,7 @@ def create_order(request):
             total_price += subtotal
             checkout_items = {
                 "product":product_obj,
+                "stickers": stickers,
                 "product_name":product_obj.name,
                 "embroidery":item.get("embroidery"),
                 "count_sticker":count_sticker,
@@ -44,6 +47,7 @@ def create_order(request):
             return JsonResponse({"error": "Перевірте правильність вводу даних"}, status=400)
 
         for key, item in cart.items():
+
             product_id = item.get("product_id")
             product_obj = Product.objects.get(id=product_id)
             quantity = item.get("quantity", 1)
@@ -53,11 +57,15 @@ def create_order(request):
             subtotal = price * quantity
             total_price += subtotal
 
+
+
             OrderItem.objects.create(
                 order=order,
                 product=product_obj,
                 product_name=product_obj.name,
                 embroidery=item.get("embroidery"),
+                stickers=item.get("selected_stickers"),
+                color=item.get("color"),
                 count_sticker=count_sticker,
                 price=subtotal,
                 quantity=quantity,

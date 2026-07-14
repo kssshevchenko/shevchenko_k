@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main class="info-page">
+
+    <section class="info-container">
+
+        <h1 class="info-title">
+            {{ pages.name }}
+        </h1>
+
+        <div class="info-description">
+            {{ pages.description|linebreaks }}
+        </div>
+
+    </section>
+
+</main>
+
+{% endblock %}

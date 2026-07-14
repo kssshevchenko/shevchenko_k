@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<main>
+
+    {% for block in blocks %}
+
+        <section class="home-block">
+
+            <div class="block-header">
+
+                {% if block.name %}
+                    <h2>{{ block.name }}</h2>
+                {% endif %}
+
+                {% if block.image %}
+                <div class="block-banner">
+                    <img
+                        src="{{ block.image.url }}"
+                        alt="{{ block.name }}"
+                    >
+                </div>
+            {% endif %}
+
+                {% if block.description %}
+                    <p>{{ block.description }}</p>
+                {% endif %}
+
+            </div>
+
+            <div class="products-grid">
+
+                {% for product in block.products.all %}
+
+                    <article class="product-card">
+
+                        <a href="/products/{{ product.slug }}/">
+
+                            <div class="product-thumb">
+
+                                {% if product.images.first %}
+                                    <img src="{{ product.images.first.image.url }}"
+                                         alt="{{ product.name }}">
+                                {% endif %}
+
+                            </div>
+
+                            <h3>{{ product.name }}</h3>
+
+                            <p>{{ product.final_price }} грн</p>
+                            {% if product.status == "IN" %}
+                                <p class="product-status status-available">
+                                    {{ product.get_status_display }}
+                                </p>
+
+                            {% elif product.status == "PRE" %}
+                                <p class="product-status status-order">
+                                    {{ product.get_status_display }}
+                                </p>
+
+                            {% else %}
+                                <p class="product-status status-unavailable">
+                                    {{ product.get_status_display }}
+                                </p>
+                            {% endif %}
+
+                        </a>
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        </section>
+
+    {% endfor %}
+
+</main>
+
+{% endblock %}

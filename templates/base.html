@@ -2,73 +2,57 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>{% block title %}Сайт{% endblock %}</title>
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    {% block extra_css %}{% endblock %}
 
-    <style>
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            z-index: 1000;
-        }
 
-        .overlay.active {
-            display: block;
-        }
-
-        .cart-drawer {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 350px;
-            height: 100%;
-            background: white;
-            padding: 20px;
-            transition: right 0.3s ease;
-            overflow-y: auto;
-            z-index: 1001;
-        }
-
-        .cart-drawer.active {
-            right: 0;
-        }
-
-        /* 🧠 стилі для сторінки товару */
-        .product-image {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-
-        .product-image img {
-            max-width: 280px;
-            max-height: 280px;
-            width: auto;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-            border-radius: 10px;
-        }
-
-        .checkout-btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 16px;
-            background: black;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-        }
-    </style>
 </head>
 
+
+
 <body>
+
+<header class="site-header">
+
+    <div class="header-container">
+
+        <div class="logo">
+            <a href="/">
+                <img src="/media/content/logo.png" alt="Logo">
+            </a>
+
+        </div>
+
+        <nav class="main-menu">
+
+            <a href="{% url 'products' %}">
+                Всі товари
+            </a>
+
+            {% for category in categories %}
+
+                <a href="{% url 'category_products' category.slug %}">
+                    {{ category.name }}
+                </a>
+
+            {% endfor %}
+
+        </nav>
+
+
+        <div class="cart-link">
+            <button onclick="openCart()"><img src="/media/content/koshyk.png" alt="koshyk"> </button>
+        </div>
+
+    </div>
+
+</header>
 
 <!-- 🔐 CSRF ТОКЕН ДЛЯ JS -->
 <form style="display:none;">
@@ -82,19 +66,65 @@
 
 <div class="cart-drawer" id="cartDrawer">
 
-    <span onclick="closeCart()" style="cursor:pointer;float:right;">✖</span>
+    <button
+        class="close-btn"
+        onclick="closeCart()"
+        aria-label="Закрити кошик">
 
-    <h2>Кошик</h2>
+        ✕
+
+    </button>
+
+    <h2 class="cart-title">
+        Кошик
+    </h2>
 
     <div id="cartContent"></div>
 
-    <h3 id="totalPrice"></h3>
+    <div class="cart-summary">
 
-    <a href="{% url 'checkout:create_order' %}" class="checkout-btn">
-        Оформити замовлення
-    </a>
+        <div class="cart-total">
+
+            <span>Разом:</span>
+
+            <span id="totalPrice"></span>
+
+        </div>
+
+        <a href="{% url 'checkout:create_order' %}"
+           class="checkout-btn">
+
+            Оформити замовлення
+
+        </a>
+
+    </div>
 
 </div>
+
+<footer class="site-footer">
+
+    <div class="footer-links">
+
+        <a href="{% url 'footer_articles' 'sizes' %}">
+            Розміри
+        </a>
+
+        <a href="{% url 'footer_articles' 'terms' %}">
+            Терміни виконання
+        </a>
+
+        <a href="{% url 'footer_articles' 'delivery' %}">
+            Оплата і доставка
+        </a>
+
+        <a href="{% url 'footer_articles' 'contacts' %}">
+            Контакти
+        </a>
+
+    </div>
+
+</footer>
 
 {% block scripts %}{% endblock %}
 
@@ -103,4 +133,6 @@
 <script src="{% static 'js/checkout.js' %}"></script>
 
 </body>
+
+
 </html>

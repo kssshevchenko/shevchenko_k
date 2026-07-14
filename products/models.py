@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 from unidecode import unidecode
-
+from decimal import Decimal
 
 """categories"""
 class Categories(models.Model):
@@ -16,6 +16,7 @@ class Categories(models.Model):
     )
     image = models.ImageField(upload_to="categories/", blank=True, null=True)
     order = models.IntegerField(default=1)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -43,7 +44,7 @@ class Color(models.Model):
 
 class ProductType(models.Model):
     categories = models.ForeignKey(Categories, on_delete=models.CASCADE, related_name="producttype")
-    name = models.CharField(max_length=10)
+    name = models.CharField(max_length=50)
 
     def __str__(self):
         return self.name
@@ -64,6 +65,7 @@ class Product(models.Model):
     supports_stickers = models.BooleanField(default=False)
     discount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Знижка")
     surcharge = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name="Доплата за вишивку")
+    is_active = models.BooleanField(default=True)
     category = models.ForeignKey(
         Categories,
         on_delete=models.CASCADE,
@@ -74,9 +76,9 @@ class Product(models.Model):
         verbose_name="Категорія",
     )
     class Status(models.TextChoices):
-        IN_STOCK = "IN", "Є в наявності"
-        PRE_ORDER = "PRE", "Передзамовлення"
-        OUT_STOCK = "OUT", "Немає в наявності"
+        IN_STOCK = "IN", "🟢 В наявності"
+        PRE_ORDER = "PRE", "🟣 Передзамовлення"
+        OUT_STOCK = "OUT", "🔴 Немає в наявності"
 
     status = models.CharField(
         max_length=3,
@@ -96,7 +98,9 @@ class Product(models.Model):
     @property
     def final_price(self):
         if self.discount > 0:
-            return self.price * (1 - self.discount / 100)
+            return (
+                    self.price - (self.price * self.discount / Decimal("100"))
+            ).quantize(Decimal("0.01"))
         return self.price
 
 class ProductImage(models.Model):
