@@ -1,0 +1,77 @@
+[33mcommit 0d031a99c8fabdc855b267761bc99d7793d808c0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Tue Jul 14 16:21:13 2026 +0300
+
+    Add ALLOWED_HOSTS
+
+[33mcommit 5414cd826ad2782ce72223fdd74a25490c4bac7d[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Tue Jul 14 16:16:44 2026 +0300
+
+    Add gunicorn
+
+[33mcommit 2f8a8bd39b71aa6899394f02549c6bfd8053270d[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Tue Jul 14 15:27:39 2026 +0300
+
+    Add MIT license
+
+[33mcommit 1a46f24d1a1fb888c04610c125fa78546ce9d8de[m
+Author: Kateryna Shevchenko <162917589+kssshevchenko@users.noreply.github.com>
+Date:   Tue Jul 14 15:22:39 2026 +0300
+
+    Add initial README with project description and tech stack
+
+[33mcommit 7550e0fb61f7aaf4a11e3973e93b6927bd82ee14[m[33m ([m[1;32mtest_branch[m[33m)[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Tue Jul 14 14:55:10 2026 +0300
+
+    Rename project, complete backend foundation
+
+[33mcommit 073d1fd0ad31fd2f99b6aefbb2cedfbda7ca98b8[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Fri Jun 26 16:12:29 2026 +0300
+
+    Add app content, finish categories and filters
+
+[33mcommit 319529d885c196117b81d9f5eeaeb606ac2a3e7d[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Thu May 21 17:40:14 2026 +0300
+
+    Add cart logic and checkout
+
+[33mcommit a700a837dceab241f4b4a95c049122ba33443e99[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Wed May 6 13:33:21 2026 +0300
+
+    Add cart logic (part1)
+
+[33mcommit ae7e993ff9499cef3a6f7a72a9a4e07b0bae6e53[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Mon Apr 20 14:23:13 2026 +0300
+
+    Add cart logic
+
+[33mcommit e0c9059d9fd6c3b3ef08f1d54772076e0c304cca[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Mon Apr 13 13:43:34 2026 +0300
+
+    Add app Products
+
+[33mcommit c7e6f54ce0131720d33e943949bb43234cc8467b[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Thu Apr 9 11:52:15 2026 +0300
+
+    Finish categories logic
+
+[33mcommit 35400d374abb952d52a62494a6a7da8c8666232b[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Tue Apr 7 15:19:08 2026 +0300
+
+    Add app Catalog
+
+[33mcommit 25d92a0cd43432561eafbcf64525dfaa9d546503[m
+Author: Kateryna Shevchenko <sidelnikks2@gmail.com>
+Date:   Wed Apr 1 15:45:18 2026 +0300
+
+    Перший коміт, базова структура проєкту
