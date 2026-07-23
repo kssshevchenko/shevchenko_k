@@ -80,19 +80,9 @@ WSGI_APPLICATION = 'shevchenko_k.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
-
+    'default': {dj_database_url.config(default=os.getenv("DATABASE_URL"))
+    }
 }
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#         'NAME': 'shevchenko_k_db',
-#         'USER': 'shevchenko_k_db_user',
-#         'PASSWORD': os,
-#         'HOST': 'dpg-d9b3sol8nd3s73a478eg-a',
-#         'PORT': '5432',
-#     }
-# }
 
 
 # Password validation
