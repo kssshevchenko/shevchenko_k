@@ -84,7 +84,6 @@ WSGI_APPLICATION = 'shevchenko_k.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv("DATABASE_URL", "LOCAL_POSTGRES_URL"))
-
 }
 
 
