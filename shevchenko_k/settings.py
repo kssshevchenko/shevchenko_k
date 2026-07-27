@@ -27,7 +27,9 @@ SECRET_KEY = 'django-insecure-r4w-x1+eh^diqtn)48&^6#4ob5)q2db_$o)g)bot(*zprj_*7k
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['shevchenko-k.onrender.com']
+ALLOWED_HOSTS = ['shevchenko-k.onrender.com',
+                 '127.0.0.1'
+                 ]
 
 
 # Application definition
@@ -80,8 +82,8 @@ WSGI_APPLICATION = 'shevchenko_k.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {dj_database_url.config(default=os.getenv("DATABASE_URL"))
-    }
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL", "LOCAL_POSTGRES_URL"))
+
 }
 
 
