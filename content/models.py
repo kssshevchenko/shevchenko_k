@@ -22,7 +22,7 @@ class Pages(models.Model):
         SIZES = "sizes", "Розміри"
         TERMS = "terms", "Терміни виконання"
 
-    name = models.CharField(blank=False, null=False, default="Інформація")
+    name = models.CharField(max_length = 100, blank=False, null=False, default="Інформація")
     description = models.TextField(blank=False, null=False, default="Детальна інформація")
     is_active = models.BooleanField(default=True)
     slug = models.SlugField(max_length=100, unique=True, blank=True)

@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 import dj_database_url
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -46,6 +49,7 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'content',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -84,7 +88,7 @@ WSGI_APPLICATION = 'shevchenko_k.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL", "LOCAL_POSTGRES_URL"))
+    'default': dj_database_url.config(default=os.getenv("DATABASE_URL") or os.getenv("LOCAL_POSTGRES_URL"))
 }
 
 
