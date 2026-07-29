@@ -7,7 +7,7 @@ class Command(BaseCommand):
         User = get_user_model()
 
         if not User.objects.filter(username="admin"):
-            User.objects.create(
+            User.objects.create_superuser(
                 username = os.getenv("ADMIN_USERNAME"),
                 password = os.getenv("ADMIN_PASSWORD"),
                 email = os.getenv("ADMIN_EMAIL")
