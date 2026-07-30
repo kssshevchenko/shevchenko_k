@@ -9,7 +9,7 @@ class Command(BaseCommand):
         password = os.getenv("ADMIN_PASSWORD")
         email = os.getenv("ADMIN_EMAIL")
 
-        user = User.objects.get_or_create(username=username)
+        user, created = User.objects.get_or_create(username=username)
         user.email = email
         user.set_password(password)
         user.is_staff = True
