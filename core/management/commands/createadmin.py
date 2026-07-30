@@ -5,8 +5,8 @@ import os
 class Command(BaseCommand):
     def handle(self, *args, **options):
         User = get_user_model()
-        username = os.getenv("ADMIN_USERNAME"),
-        password = os.getenv("ADMIN_PASSWORD"),
+        username = os.getenv("ADMIN_USERNAME")
+        password = os.getenv("ADMIN_PASSWORD")
         email = os.getenv("ADMIN_EMAIL")
 
         user = User.objects.get_or_create(username=username)
