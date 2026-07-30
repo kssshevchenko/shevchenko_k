@@ -5,10 +5,13 @@ import os
 class Command(BaseCommand):
     def handle(self, *args, **options):
         User = get_user_model()
+        username = os.getenv("ADMIN_USERNAME"),
+        password = os.getenv("ADMIN_PASSWORD"),
+        email = os.getenv("ADMIN_EMAIL")
 
-        if not User.objects.filter(username="admin"):
-            User.objects.create_superuser(
-                username = os.getenv("ADMIN_USERNAME"),
-                password = os.getenv("ADMIN_PASSWORD"),
-                email = os.getenv("ADMIN_EMAIL")
-            )
+        user = User.objects.get_or_create(username=username)
+        user.email = email
+        user.set_password(password)
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
